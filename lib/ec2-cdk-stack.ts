@@ -168,10 +168,10 @@ export class Ec2CdkStack extends cdk.Stack {
     deployStage.addAction(pythonDeployAction);
 
      // Output the public IP address of the EC2 instance
-    new cdk.CfnOutput(this, "IP Address", {
-      value: webServer.instancePublicIp,
-    });
+    // new cdk.CfnOutput(this, "IP Address", {
+    //   value: webServer.instancePublicIp,
+    // });
 
-    
+
   } 
 }
