@@ -144,6 +144,34 @@ export class Ec2CdkStack extends cdk.Stack {
     buildStage.addAction(pythonTestAction);
 
     // Deploy Actions
+    const pythonDeployApplication = new ServerApplication(this, "python_deploy_application", {
+      applicationName: 'python-webapp'
+    });
+
+    //Deployment group
+    const pythonServerDeploymentGroup = new ServerDeploymentGroup(this, 'pythonAppDeployGroup',{
+      application: pythonDeployApplication,
+      deploymentGroupName: 'PythonAppDeploymentGroup',
+      installAgent: true,
+      ec2InstanceTags: new InstanceTagSet({
+        'application-name': ['python-web'],
+        'stage': ['prod', 'stage']
+      })
+    });
+
+    //Deployment action
+    const pythonDeployAction = new CodeDeployServerDeployAction({
+      actionName: 'PythonAppDeployment',
+      input: sourceOutput,
+      deploymentGroup: pythonServerDeploymentGroup,
+    });
+    deployStage.addAction(pythonDeployAction);
+
+     // Output the public IP address of the EC2 instance
+    new cdk.CfnOutput(this, "IP Address", {
+      value: webServer.instancePublicIp,
+    });
+
     
   } 
 }
