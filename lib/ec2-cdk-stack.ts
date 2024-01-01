@@ -24,7 +24,7 @@ export class Ec2CdkStack extends cdk.Stack {
     webServerRole.addManagedPolicy(ManagedPolicy.fromAwsManagedPolicyName("AmazonSSMManagedInstanceCore"));
 
     webServerRole.addManagedPolicy(
-      ManagedPolicy.fromAwsManagedPolicyName("service-role/AmazonEC2RolefowAWSCodeDeploy"));
+      ManagedPolicy.fromAwsManagedPolicyName("service-role/AmazonEC2RoleforAWSCodeDeploy"));
 
     //This create a VPC with 3 public subnets 
     const vpc = new Vpc(this, 'MyDemo_NewVPC',{
@@ -93,7 +93,7 @@ export class Ec2CdkStack extends cdk.Stack {
 
     // CodePipeline
     const pipeline = new Pipeline(this, 'python_web_pipeline', {
-      pipelineName: 'pthon-webApp',
+      pipelineName: 'python-webApp',
       crossAccountKeys: false, // solves the encrypted bucket issues
     });
 
